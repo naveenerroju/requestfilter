@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.verve.requestfilter.kafka.KafkaPublisher;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -13,18 +15,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class RequestFilterService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestFilterService.class);
     private final AtomicInteger uniqueCount = new AtomicInteger(0);
     private final RedisService redisService;
+    private final KafkaPublisher kafkaPublisher;
 
     public RequestFilterService(RedisService redisService){
         this.redisService = redisService;
+        this.kafkaPublisher = new KafkaPublisher();
     }
 
     @Scheduled(fixedRate = 60000)
     public void logUniqueRequests() {
         int count = uniqueCount.getAndSet(0); // Atomically get and reset
-        logger.info("Unique request count in the last minute: {}", count);
+        kafkaPublisher.publishMessage("Unique request count in the last minute: "+ count);
     }
 
     public boolean trackRequest(int id) {

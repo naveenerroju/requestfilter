@@ -1,7 +1,6 @@
 package com.verve.requestfilter.service;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import java.time.Duration;
 
@@ -23,15 +22,4 @@ public class RedisService {
         return added != null && added > 0;        // Returns true if ID is unique
     }
 
-    public void setValue(String key, Object value) {
-        redisTemplate.opsForValue().set(key, value);
-    }
-
-    public Object getValue(String key) {
-        return redisTemplate.opsForValue().get(key);
-    }
-
-    public void deleteValue(String key) {
-        redisTemplate.delete(key);
-    }
 }
