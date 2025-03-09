@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -18,7 +17,6 @@ public class RequestFilterService {
     private final AtomicInteger uniqueCount = new AtomicInteger(0);
     private final RedisService redisService;
 
-    @Autowired
     public RequestFilterService(RedisService redisService){
         this.redisService = redisService;
     }

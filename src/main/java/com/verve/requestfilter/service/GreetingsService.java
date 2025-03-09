@@ -1,6 +1,5 @@
 package com.verve.requestfilter.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -8,7 +7,6 @@ import reactor.core.publisher.Mono;
 public class GreetingsService {
     private final RequestFilterService requestFilterService;
 
-    @Autowired
     public GreetingsService(RequestFilterService requestFilterService) {
         this.requestFilterService = requestFilterService;
     }
